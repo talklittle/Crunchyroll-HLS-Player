@@ -1,6 +1,7 @@
 chrome.runtime.onInstalled.addListener(initialize);
 chrome.runtime.onStartup.addListener(initialize);
 initialize();
+
 var deviceId;
 var userData = {};
 //var sessionId,auth,authTime,username,password,autoStart,bufferLength,skipOp,skipEd,locale,resume;
@@ -27,12 +28,12 @@ function initialize(details){
 	chrome.storage.local.set({'userData':userData});
 	if(details!==undefined&&details.OnInstalledReason!==undefined){
 	  if(details.OnInstalledReason === "update"&&userData['username']!==undefined)
-	    login(null);
+	    login(undefined);
 	}
   });
   
 }
-
+login(undefined);
 var defaultHeaders = [{name:'User-Agent',value:"Mozilla/5.0 (iPhone; iPhone OS 8.3.0; en_US)"}, {name:'Host',value:"api.crunchyroll.com"}, {name:'Accept-Encoding',value:"gzip, deflate"}, {name:'Accept',value:"*/*"}, {name:'Content-Type',value:"application/x-www-form-urlencoded"}];
 chrome.webRequest.onBeforeSendHeaders.addListener(function(details){
   return {requestHeaders:defaultHeaders};
@@ -71,8 +72,9 @@ function start(sendResponse){
   }});
 }
 function login(sendResponse){
-  if(userData['username'] === undefined&&sendResponse!==undefined){
-    sendResponse("badLogin");
+  if(userData['username'] === undefined){
+    if(sendResponse!==undefined)
+      sendResponse("badLogin");
 	return;
   }
   var loginOptions = {'session_id':userData['sessionId'], 'password':userData['password'], 'account':userData['username'], 'version':"2313.8", 'locale': userData['locale']};
