@@ -1,0 +1,33 @@
+$(function(){
+$('#save').click(function(){
+  console.log('updating login');
+  chrome.runtime.sendMessage({text:'updatelogin',username:$('#username').val(),password:$('#password').val()},function(reply){
+    document.write("Saved");
+  });
+});
+chrome.runtime.sendMessage({text:'getOptions'},function(reply){
+  console.log(reply);
+  $('#buffer').val(reply.bufferLength);
+  $('#skipOp').val(reply.skipOp);
+  $('#skipEd').val(reply.skipEd);
+  $('#language').val(reply.locale);
+  $('#resume').val(reply.resume);
+});
+$('#saveBuffer').click(function(){
+  chrome.runtime.sendMessage({text:'updateBufferLength',bufferLength:$('#buffer').val()},function(reply){
+    document.write("Buffer Updated");
+  });
+});
+$('#skipOp').change(function(){
+  chrome.runtime.sendMessage({text:'updateSkipOp',skipOp:$('#skipOp').val()});
+});
+$('#skipEd').change(function(){
+  chrome.runtime.sendMessage({text:'updateSkipEd',skipEd:$('#skipEd').val()});
+});
+$('#language').change(function(){
+  chrome.runtime.sendMessage({text:'updateLocale',locale:$('#language').val()});
+});
+$('#resume').change(function(){
+  chrome.runtime.sendMessage({text:'updateResume',resume:$('#resume').val()});
+});
+});

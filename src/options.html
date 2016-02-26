@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="jquery.min.js"></script>
+	<script src="options.js"></script>
+  </head>
+  <body>
+    <input type="text" placeholder="Username" id="username"></input><br />
+	<input type="password" placeholder="Password" id="password"></input><br />
+	<input type="button" title="save" id="save" value="Save"></input><br /><br />
+	
+	<input type="text" placeholder="Buffer Length" id="buffer"></input><br />
+	<input type="button" id="saveBuffer" value="Update"></input><br /><br />
+	
+	<h3>Skip OP</h3>
+	<select id="skipOp">
+	  <option value="true">Enabled</option>
+	  <option value="false">Disabled</option>
+	</select><br />
+	
+	<h3>Skip ED</h3>
+	<select id="skipEd">
+	  <option value="true">Enabled</option>
+	  <option value="false">Disabled</option>
+	</select><br />
+	
+	<h3>Resume Playback</h3>
+	<select id="resume">
+	  <option value="true">Enabled</option>
+	  <option value="false">Disabled</option>
+	</select><br />
+	
+	<h3>Subtitle Language</h3>
+	<select id="language" >
+	  <option value="enUS">English (US)</option>
+	  <option value="enGB">English (UK)</option>
+	  <option value="arME">العربية</option>
+	  <option value="frFR">Français (France)</option>
+	  <option value="deDE">Deutsch</option>
+	  <option value="itIT">Italiano</option>
+	  <option value="ptBR">Português (Brasil)</option>
+	  <option value="ptPT">Português (Portugal)</option>
+	  <option value="esLA">Español</option>
+	  <option value="esES">Español (España)</option>
+	</select>
+  </body>
+</html>
