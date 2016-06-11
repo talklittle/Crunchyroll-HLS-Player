@@ -12,6 +12,10 @@ chrome.runtime.sendMessage({text:'getOptions'},function(reply){
   $('#skipEd').val(reply.skipEd);
   $('#language').val(reply.locale);
   $('#resume').val(reply.resume);
+  $('#start').val(reply.start);
+  $('#autoplay').val(reply.autoplay);
+  $('#height').val(reply.height);
+  $('#width').val(reply.width);
 });
 $('#saveBuffer').click(function(){
   chrome.runtime.sendMessage({text:'updateBufferLength',bufferLength:$('#buffer').val()},function(reply){
@@ -29,5 +33,17 @@ $('#language').change(function(){
 });
 $('#resume').change(function(){
   chrome.runtime.sendMessage({text:'updateResume',resume:$('#resume').val()});
+});
+$('#start').change(function(){
+  chrome.runtime.sendMessage({text:'updateStart',start:$('#start').val()});
+});
+$('#autoplay').change(function(){
+  chrome.runtime.sendMessage({text:'updateAutoplay',autoplay:$('#autoplay').val()});
+});
+$('#width').change(function(){
+  chrome.runtime.sendMessage({text:'updateWidth',width:$('#width').val()});
+});
+$('#height').change(function(){
+  chrome.runtime.sendMessage({text:'updateHeight',height:$('#height').val()});
 });
 });
