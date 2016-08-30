@@ -1,6 +1,6 @@
 {
   "name": "CR HLS Player",
-  "version": "1.4.12.1",
+  "version": "1.4.12.10",
   "description": "A test for video js",
   "manifest_version": 2,
   "permissions": [
@@ -13,7 +13,7 @@
   "options_page": "options.html",
   "content_scripts":[
     {
-      "matches": ["http://www.crunchyroll.com/*/episode*","http://www.crunchyroll.com/*/*-pv-*","http://www.crunchyroll.com/*/*-ova-*"],
+      "matches": ["http://www.crunchyroll.com/*/*episode-*","http://www.crunchyroll.com/*/*-ova-*","http://www.crunchyroll.com/*/*-part-*","http://www.crunchyroll.com/*/*-classic-*","http://www.crunchyroll.com/*/*-special-*","http://www.crunchyroll.com/one-piece/one-piece-*","http://www.crunchyroll.com/momokuri/momokuri*"],
       "exclude_matches": ["http://www.crunchyroll.com/news*","http://www.crunchyroll.com/comics*","http://www.crunchyroll.com/store*","http://www.crunchyroll.com/forum*"],
 	  "js":["jquery.min.js","video.min.js","videojs.hls.min.js","videojs.persistvolume.js","videojs-seek.min.js","videojs.cuepoints.js","videojs.hotkeys.min.js","videojs_5.vast.vpaid.min.js","videojs.ads.js","hlsplayer.js"],
 	  "css":["video-js.min.css","videojs.vast.vpaid.min.css","videojs.ads.css"]

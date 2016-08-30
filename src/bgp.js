@@ -72,6 +72,9 @@ function start(sr,lg,op){
 
   var options = {'device_id':userData['deviceId'], 'device_type':"com.crunchyroll.iphone", 'access_token':"QWjz212GspMHH9h", 'version':"2313.8", 'locale': userData['locale']};
   //var options = {'device_id':userData['deviceId'], 'device_type':"com.crunchyroll.crunchyroid", 'access_token':"Scwg9PRRZ19iVwD", 'version':"2313.8", 'locale': userData['locale']};
+  //var options = {'device_id':userData['deviceId'], 'device_type':"com.crunchyroll.windows.desktop", 'access_token':"LNDJgOit5yaRIWN", 'version':"2313.8", 'locale': userData['locale']};
+  //var options = {'device_id':userData['deviceId'], 'device_type':"com.crunchyroll.windows.phone", 'access_token':"ta18QevgoCrxWBN", 'version':"2313.8", 'locale': userData['locale']};
+  //var options = {'device_id':userData['deviceId'], 'device_type':"com.crunchyroll.windows.tablet", 'access_token':"IB2iVIM7q7bc8T8", 'version':"2313.8", 'locale': userData['locale']};
   $.ajax('https://api.crunchyroll.com/start_session.0.json',{async:false,data:options,success:function(data){
     userData['sessionId'] = data.data.session_id;
 	chrome.storage.local.set({'userData':userData});

@@ -9,7 +9,7 @@ var mediaId;
 var adDone=false;
 $(function(){  
   chrome.runtime.sendMessage({text:"getOptions"},function(reply){
-    videojs.Hls.GOAL_BUFFER_LENGTH = reply.bufferLength;
+    videojs.Hls.GOAL_BUFFER_LENGTH = parseInt(reply.bufferLength);
 	skipOp = reply.skipOp;
 	skipEd = reply.skipEd;
 	resume = reply.resume;
@@ -17,6 +17,7 @@ $(function(){
 	isPremium = reply.isPremium;
 	autoPlay = reply.autoplay;
 	adsEnabled = isPremium === "true"?false:true;
+	//adsEnabled = false;
     width = reply.width;
 	height = reply.height;
   $('#showmedia_video_box_wide').remove();
@@ -63,7 +64,8 @@ $(function(){
 	  quality = 0;
 	  break;
   }
-  
+  var bufferLengths = [0,1500,900,600,450];
+  videojs.Hls.GOAL_BUFFER_LENGTH = Math.min(videojs.Hls.GOAL_BUFFER_LENGTH,bufferLengths[quality]);
   var temp = location.pathname.split('-');
   mediaId = temp[temp.length-1];
   play(mediaId,quality);
@@ -83,17 +85,18 @@ function rearrangeshit(){
 
 
 function play(mediaId,quality){
-  //if(skipOp=="true"){
   chrome.runtime.sendMessage({text:"getAdRoll",mediaId:mediaId},function(reply){
     //console.log(reply);
     adUrls = reply;
-	opEnd = parseInt(Object.keys(adUrls)[1]);
-	edStart = parseInt(Object.keys(adUrls)[3]);
+	if(Object.keys(adUrls).length == 0){
+	  adsEnabled = false;
+	}
+	else if(adUrls&&Object.keys(adUrls)[1]&&Object.keys(adUrls)[3]){
+	  opEnd = parseInt(Object.keys(adUrls)[1]);
+	  edStart = parseInt(Object.keys(adUrls)[3]);
+	}
 	getMediaInfo(mediaId,quality);
   });
-  //}
-  //else
-   // getMediaInfo(mediaId,quality);
 }
 function getMediaInfo(mediaId,quality){
   chrome.runtime.sendMessage({text:"getMediaUrl",mediaId:mediaId,quality:quality},function(reply){
@@ -115,8 +118,10 @@ function getMediaInfo(mediaId,quality){
       });
 	  if(adsEnabled)
 	    vastAd.enable();
+	  
     });
 	player = videojs('video',{"plugins":{"ads-setup":{"adCancelTimeout":20000,"adsEnabled":adsEnabled}}},function(){this.seek({'seek_param':'t'})});
+	
 	if(width != 960){
 	var targetFloat = (width-960)/2
 	targetFloat.toPrecision(1);
@@ -134,13 +139,17 @@ function getMediaInfo(mediaId,quality){
 	  end: edStart,
 	  onStart: function(params){
 	    //console.log("Near start of op");
-		if(skipOp==="true"&&isNaN(opEnd)===false&&adDone)
+		if(skipOp==="true"&&isNaN(opEnd)===false&&adDone){
 	      player.currentTime(opEnd);
+		  player.destroyCuepoints() 
+		}
 	  },
 	  onEnd: function(params){
 	    //console.log("Start of ED");
-		if(skipOp==="true"&&isNaN(edStart)===false&&adDone)
+		if(skipEd==="true"&&isNaN(edStart)===false&&adDone){
 	      player.currentTime(edStart+89);
+		  player.destroyCuepoints()
+		}
 	  },
 	  params:{error:false}
 	});}  
@@ -156,7 +165,10 @@ function getMediaInfo(mediaId,quality){
 	}	
     if(autoStart === "true")
 	    player.play();
-    
+    player.on('vast.adError',function(e){
+		adsEnabled = false;
+		//player.trigger('playing');
+	});
     player.hotkeys({alwaysCaptureHotkeys:true});
 	ccount = 0;
 	updateViewTime(mediaId,player.currentTime())
