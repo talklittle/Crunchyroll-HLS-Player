@@ -15,7 +15,7 @@
     {
       "matches": ["http://www.crunchyroll.com/*/episode*","http://www.crunchyroll.com/*/*-pv-*","http://www.crunchyroll.com/*/*-ova-*"],
       "exclude_matches": ["http://www.crunchyroll.com/news*","http://www.crunchyroll.com/comics*","http://www.crunchyroll.com/store*","http://www.crunchyroll.com/forum*"],
-	  "js":["jquery.min.js","video.min.js","videojs.hls.min.js","videojs.persistvolume.js","videojs-seek.min.js","videojs.cuepoints.js","videojs.hotkeys.min.js","videojs_5.vast.vpaid.min.js","videojs.ads.js","hlsplayer.js"],
+	  "js":["jquery.min.js","video.min.js","videojs-contrib-hls.min.js","videojs.persistvolume.js","videojs-seek.min.js","videojs.cuepoints.js","videojs.hotkeys.min.js","videojs_5.vast.vpaid.min.js","videojs.ads.js","hlsplayer.js"],
 	  "css":["video-js.min.css","videojs.vast.vpaid.min.css","videojs.ads.css"]
 	}
   ],
