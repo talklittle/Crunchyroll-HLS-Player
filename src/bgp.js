@@ -1,5 +1,9 @@
-chrome.runtime.onInstalled.addListener(initialize);
-chrome.runtime.onStartup.addListener(initialize);
+if (chrome.runtime.onInstalled != null) {
+  chrome.runtime.onInstalled.addListener(initialize);
+}
+if (chrome.runtime.onStartup != null) {
+  chrome.runtime.onStartup.addListener(initialize);
+}
 initialize();
 
 var deviceId;
