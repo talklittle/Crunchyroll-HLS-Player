@@ -1,7 +1,7 @@
-if(chrome.runtime.onInstalled !== null){
+if(chrome.runtime.onInstalled){
 chrome.runtime.onInstalled.addListener(initialize);
 }
-if(chrome.runtime.onStartup.addListener !== null){
+if(chrome.runtime.onStartup){
 chrome.runtime.onStartup.addListener(initialize);
 }
 initialize();
